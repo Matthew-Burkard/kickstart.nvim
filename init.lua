@@ -202,7 +202,7 @@ require("lazy").setup({
         { "<leader>d", group = "Document" },
         { "<leader>r", group = "Rename" },
         { "<leader>s", group = "Search" },
-        { "<leader>w", group = "Workspace" },
+        { "<leader>l", group = "Language" },
         { "<leader>t", group = "Toggle" },
         { "<leader>h", group = "Git Hunk", mode = { "n", "v" } },
       })
@@ -391,7 +391,7 @@ require("lazy").setup({
 
           -- Fuzzy find all the symbols in your current workspace.
           --  Similar to document symbols, except searches over your entire project.
-          map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Workspace Symbols")
+          map("<leader>ls", require("telescope.builtin").lsp_dynamic_workspace_symbols, "Language Symbols")
 
           -- Rename the variable under your cursor.
           --  Most Language Servers support renaming across files, etc.
@@ -475,15 +475,20 @@ require("lazy").setup({
         -- But for many setups, the LSP (`tsserver`) will work just fine
         -- tsserver = {},
         --
-        --        ruff_lsp = {
-        --          cmd = { "ruff", "lsp" }, -- Ensure this is the correct command for ruff LSP
-        --          root_dir = require("lspconfig.util").root_pattern(".git", "pyproject.toml"),
-        --          settings = {
-        --            ruff = {
-        --              config = "pyproject.toml", -- Path to the pyproject.toml file
-        --            },
-        --          },
-        --        },
+        -- pyright = {
+        --   settings = {
+        --     pyright = {
+        --       -- Using Ruff's import organizer
+        --       disableOrganizeImports = true,
+        --     },
+        --     python = {
+        --       analysis = {
+        --         -- Ignore all files for analysis to exclusively use Ruff for linting
+        --         ignore = { "*" },
+        --       },
+        --     },
+        --   },
+        -- },
 
         lua_ls = {
           -- cmd = {...},
@@ -685,22 +690,39 @@ require("lazy").setup({
     end,
   },
 
+  -- Colorschemes
+  { "lunarvim/colorschemes" },
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+  },
+  {
+    "rose-pine/neovim",
+    name = "rose-pine",
+    variant = "main",
+  },
+  { "catppuccin/nvim" },
+
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
     -- change the command in the config to whatever the name of that colorscheme is.
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+
     "folke/tokyonight.nvim",
+
     priority = 1000, -- Make sure to load this before all the other start plugins.
+
     init = function()
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
       vim.cmd.colorscheme("tokyonight-night")
+      require("custom.lunar").setup()
 
       -- Theme overrides.
-      local hl = vim.api.nvim_get_hl(0, { name = "LineNr", link = false })
-      vim.api.nvim_set_hl(0, "CursorLineNr", { fg = hl.fg })
+      -- local hl = vim.api.nvim_get_hl(0, { name = "Normal", link = false })
+      -- vim.api.nvim_set_hl(0, "CursorLineNr", { fg = hl.fg })
       -- You can configure highlights by doing something like:
       vim.cmd.hi("Comment gui=none")
     end,
@@ -752,6 +774,8 @@ require("lazy").setup({
         "query",
         "vim",
         "vimdoc",
+        "python",
+        "rst",
       },
       -- Autoinstall languages that are not installed
       auto_install = true,
@@ -829,3 +853,19 @@ require("lazy").setup({
 
 -- Theme overrides.
 vim.api.nvim_set_hl(0, "YankHighlight", { fg = "white", bg = "#2d59a1" })
+-- Set custom colors for the FloatBorder highlight group (Mason, Lazy).
+local current_highlight = vim.api.nvim_get_hl(0, { name = "FloatBorder", link = false })
+
+vim.api.nvim_set_hl(0, "FloatBorder", { fg = current_highlight.fg, bg = current_highlight.bg })
+-- Telescope border colors.
+vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = current_highlight.fg, bg = current_highlight.bg })
+vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = current_highlight.fg, bg = current_highlight.bg })
+vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { fg = current_highlight.fg, bg = current_highlight.bg })
+vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { fg = current_highlight.fg, bg = current_highlight.bg })
+
+-- Set custom colors for indent blankline characters.
+vim.api.nvim_set_hl(0, "IndentBlanklineChar", { fg = current_highlight.fg })
+vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = current_highlight.fg })
+
+-- Optional: Change color for indent context start.
+vim.api.nvim_set_hl(0, "IndentBlanklineContextStart", { fg = current_highlight.fg })
