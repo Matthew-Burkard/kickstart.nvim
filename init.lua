@@ -272,6 +272,10 @@ require("lazy").setup({
         --   },
         -- },
         -- pickers = {}
+        defaults = {
+          sorting_strategy = "ascending",
+          layout_config = { prompt_position = "top" },
+        },
         extensions = {
           ["ui-select"] = {
             require("telescope.themes").get_dropdown(),
@@ -399,7 +403,7 @@ require("lazy").setup({
 
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
-          map("<leader>ca", vim.lsp.buf.code_action, "Code Action")
+          map("<leader>la", vim.lsp.buf.code_action, "Language Action")
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
@@ -753,6 +757,12 @@ require("lazy").setup({
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require("mini.surround").setup()
+      require("mini.comment").setup({
+        mappings = {
+          comment = "",
+          comment_line = "<leader>c",
+        },
+      })
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
