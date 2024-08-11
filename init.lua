@@ -524,6 +524,10 @@ require("lazy").setup({
       })
       require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
+      local handlers = {
+        ["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" }),
+        ["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" }),
+      }
       require("mason-lspconfig").setup({
         handlers = {
           function(server_name)
@@ -532,6 +536,7 @@ require("lazy").setup({
             -- by the server configuration above. Useful when disabling
             -- certain features of an LSP (for example, turning off formatting for tsserver)
             server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+            server.handlers = handlers
             require("lspconfig")[server_name].setup(server)
           end,
         },
@@ -619,6 +624,10 @@ require("lazy").setup({
       luasnip.config.setup({})
 
       cmp.setup({
+        window = {
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
+        },
         snippet = {
           expand = function(args)
             luasnip.lsp_expand(args.body)
@@ -865,14 +874,21 @@ local current_highlight = vim.api.nvim_get_hl(0, { name = "FloatBorder", link = 
 
 vim.api.nvim_set_hl(0, "FloatBorder", { fg = current_highlight.fg, bg = current_highlight.bg })
 -- Telescope border colors.
-vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = current_highlight.fg, bg = current_highlight.bg })
+-- Commented out lines overlap with LunarVim edits.
+-- vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = current_highlight.fg, bg = current_highlight.bg })
 vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = current_highlight.fg, bg = current_highlight.bg })
 vim.api.nvim_set_hl(0, "TelescopeResultsBorder", { fg = current_highlight.fg, bg = current_highlight.bg })
 vim.api.nvim_set_hl(0, "TelescopePreviewBorder", { fg = current_highlight.fg, bg = current_highlight.bg })
 
 -- Set custom colors for indent blankline characters.
-vim.api.nvim_set_hl(0, "IndentBlanklineChar", { fg = current_highlight.fg })
-vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = current_highlight.fg })
+-- vim.api.nvim_set_hl(0, "IndentBlanklineChar", { fg = current_highlight.fg })
+-- vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = current_highlight.fg })
 
 -- Optional: Change color for indent context start.
-vim.api.nvim_set_hl(0, "IndentBlanklineContextStart", { fg = current_highlight.fg })
+-- vim.api.nvim_set_hl(0, "IndentBlanklineContextStart", { fg = current_highlight.fg })
+
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
