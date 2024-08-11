@@ -198,8 +198,6 @@ require("lazy").setup({
 
       -- Document existing key chains
       require("which-key").add({
-        { "<leader>c", group = "Code" },
-        { "<leader>d", group = "Document" },
         { "<leader>r", group = "Rename" },
         { "<leader>s", group = "Search" },
         { "<leader>l", group = "Language" },
@@ -387,11 +385,11 @@ require("lazy").setup({
           -- Jump to the type of the word under your cursor.
           --  Useful when you're not sure what type a variable is and you want to see
           --  the definition of its *type*, not where it was *defined*.
-          map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type Definition")
+          -- map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type Definition")
 
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.
-          map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "Document Symbols")
+          map("<leader>ss", require("telescope.builtin").lsp_document_symbols, "Document Symbols")
 
           -- Fuzzy find all the symbols in your current workspace.
           --  Similar to document symbols, except searches over your entire project.
@@ -796,7 +794,7 @@ require("lazy").setup({
         --  the list of additional_vim_regex_highlighting and disabled languages for indent.
         additional_vim_regex_highlighting = { "ruby" },
       },
-      indent = { enable = true, disable = { "ruby" } },
+      indent = { enable = true, disable = { "ruby", "python" } },
     },
     config = function(_, opts)
       -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
@@ -822,11 +820,10 @@ require("lazy").setup({
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug',
+  require("kickstart.plugins.debug"),
   require("kickstart.plugins.indent_line"),
   -- require 'kickstart.plugins.lint',
   require("kickstart.plugins.autopairs"),
-  -- require("kickstart.plugins.neo-tree"),
   require("kickstart.plugins.gitsigns"), -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
