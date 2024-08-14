@@ -794,6 +794,7 @@ require("lazy").setup({
         "python",
         "rst",
         "regex",
+        "sql",
       },
       -- Autoinstall languages that are not installed
       auto_install = true,
