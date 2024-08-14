@@ -467,7 +467,6 @@ require("lazy").setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -477,20 +476,26 @@ require("lazy").setup({
         -- But for many setups, the LSP (`tsserver`) will work just fine
         -- tsserver = {},
         --
-        -- pyright = {
-        --   settings = {
-        --     pyright = {
-        --       -- Using Ruff's import organizer
-        --       disableOrganizeImports = true,
-        --     },
-        --     python = {
-        --       analysis = {
-        --         -- Ignore all files for analysis to exclusively use Ruff for linting
-        --         ignore = { "*" },
-        --       },
-        --     },
-        --   },
-        -- },
+        pyright = {
+          capabilities = (function()
+            local pyr_capabilities = vim.lsp.protocol.make_client_capabilities()
+            pyr_capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
+            return pyr_capabilities
+          end)(),
+          settings = {
+            python = {
+              analysis = {
+                useLibraryCodeForTypes = true,
+                -- Using Ruff's import organizer
+                disableOrganizeImports = true,
+                diagnosticSeverityOverrides = {
+                  reportUnusedVariable = "warning", -- or anything
+                },
+                typeCheckingMode = "basic",
+              },
+            },
+          },
+        },
 
         lua_ls = {
           -- cmd = {...},
@@ -788,6 +793,7 @@ require("lazy").setup({
         "vimdoc",
         "python",
         "rst",
+        "regex",
       },
       -- Autoinstall languages that are not installed
       auto_install = true,
