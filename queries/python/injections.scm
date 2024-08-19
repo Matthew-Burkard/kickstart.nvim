@@ -1,6 +1,6 @@
 ;; extends
 
-; function/method docstring
+; Function/method docstring.
 (function_definition
   body: (block .
     (expression_statement
@@ -11,7 +11,7 @@
   )
 )
 
-; module docstring
+; Module docstring.
 (module .
   (expression_statement
     (string
@@ -20,7 +20,7 @@
   )
 )
 
-; function/method docstring
+; Class definition.
 (class_definition
   body: (block .
     (expression_statement

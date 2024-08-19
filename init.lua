@@ -489,7 +489,7 @@ require("lazy").setup({
                 -- Using Ruff's import organizer
                 disableOrganizeImports = true,
                 diagnosticSeverityOverrides = {
-                  reportUnusedVariable = "warning", -- or anything
+                  reportUnusedVariable = "none",
                 },
                 typeCheckingMode = "basic",
               },
@@ -874,7 +874,6 @@ vim.api.nvim_set_hl(0, "YankHighlight", { fg = "white", bg = "#2d59a1" })
 -- Set custom colors for the FloatBorder highlight group (Mason, Lazy).
 local current_highlight = vim.api.nvim_get_hl(0, { name = "FloatBorder", link = false })
 
-vim.api.nvim_set_hl(0, "FloatBorder", { fg = current_highlight.fg, bg = current_highlight.bg })
 -- Telescope border colors.
 -- Commented out lines overlap with LunarVim edits.
 -- vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = current_highlight.fg, bg = current_highlight.bg })
