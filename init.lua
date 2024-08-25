@@ -11,6 +11,9 @@ vim.g.have_nerd_font = true
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
+-- Spell check.
+vim.opt.spell = true
+
 -- Make line numbers default
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
@@ -51,7 +54,7 @@ vim.opt.timeoutlen = 300
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
--- Sets how neovim will display certain whitespace characters in the editor.
+-- Sets how Neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = true
@@ -287,15 +290,15 @@ require("lazy").setup({
 
       -- See `:help telescope.builtin`
       local builtin = require("telescope.builtin")
-      vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
-      vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
-      vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
-      vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
-      vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
-      vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
-      vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
-      vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
-      vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+      vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "Search Help" })
+      vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "Search Keymaps" })
+      vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "Search Files" })
+      vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "Search Select Telescope" })
+      vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "Search current Word" })
+      vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "Search by Grep" })
+      vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "Search Diagnostics" })
+      vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "Search Resume" })
+      vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = 'Search Recent Files ("." for repeat)' })
       vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
 
       -- Slightly advanced example of overriding default behavior and theme
@@ -314,19 +317,19 @@ require("lazy").setup({
           grep_open_files = true,
           prompt_title = "Live Grep in Open Files",
         })
-      end, { desc = "[S]earch [/] in Open Files" })
+      end, { desc = "Search [/] in Open Files" })
 
       -- Shortcut for searching your Neovim configuration files
       vim.keymap.set("n", "<leader>sn", function()
         builtin.find_files({ cwd = vim.fn.stdpath("config") })
-      end, { desc = "[S]earch [N]eovim files" })
+      end, { desc = "Search Neovim files" })
     end,
   },
 
   -- LSP Plugins
   {
     -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
-    -- used for completion, annotations and signatures of Neovim apis
+    -- used for completion, annotations and signatures of Neovim APIs
     "folke/lazydev.nvim",
     ft = "lua",
     opts = {
@@ -598,7 +601,7 @@ require("lazy").setup({
           return "make install_jsregexp"
         end)(),
         dependencies = {
-          -- `friendly-snippets` contains a variety of premade snippets.
+          -- `friendly-snippets` contains a variety of pre-made snippets.
           --    See the README about individual language/framework/plugin snippets:
           --    https://github.com/rafamadriz/friendly-snippets
           {
@@ -640,12 +643,12 @@ require("lazy").setup({
         --
         -- No, but seriously. Please read `:help ins-completion`, it is really good!
         mapping = cmp.mapping.preset.insert({
-          -- Select the [n]ext item
+          -- Select the next item.
           ["<C-n>"] = cmp.mapping.select_next_item(),
-          -- Select the [p]revious item
+          -- Select the previous item.
           ["<C-p>"] = cmp.mapping.select_prev_item(),
 
-          -- Scroll the documentation window [b]ack / [f]orward
+          -- Scroll the documentation window back / forward
           ["<C-b>"] = cmp.mapping.scroll_docs(-4),
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
 
@@ -796,7 +799,7 @@ require("lazy").setup({
         "regex",
         "sql",
       },
-      -- Autoinstall languages that are not installed
+      -- Auto-install languages that are not installed
       auto_install = true,
       highlight = {
         enable = true,
