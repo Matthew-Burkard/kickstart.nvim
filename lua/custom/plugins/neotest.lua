@@ -9,6 +9,8 @@ return {
   },
   config = function()
     local neotest = require("neotest")
+    -- Ignore because plugin is incorrectly typed as is nvim tradition.
+    ---@diagnostic disable-next-line: missing-fields
     neotest.setup({
       adapters = {
         require("neotest-python")({
@@ -20,6 +22,13 @@ return {
         }),
       },
     })
-    vim.keymap.set("n", "<leader>t", neotest.run.run)
+    local run = function()
+      -- Ignore because plugin is incorrectly typed as is nvim tradition.
+      ---@diagnostic disable-next-line: missing-fields
+      neotest.run.run({ strategy = "dap" })
+    end
+    vim.keymap.set("n", "<leader>t", run)
+    vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "error", linehl = "", numhl = "" })
+    vim.fn.sign_define("DapBreakpointCondition", { text = "", texthl = "error", linehl = "", numhl = "" })
   end,
 }
