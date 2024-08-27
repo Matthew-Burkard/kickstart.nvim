@@ -17,17 +17,22 @@ return {
           dap = {
             justMyCode = false,
           },
-          args = { "--cov", "--cov-report=json" },
-          runner = "pytest",
+          -- ,
         }),
       },
     })
-    local run = function()
+    local debug = function()
       -- Ignore because plugin is incorrectly typed as is nvim tradition.
       ---@diagnostic disable-next-line: missing-fields
       neotest.run.run({ strategy = "dap" })
     end
-    vim.keymap.set("n", "<leader>t", run)
+    local run = function()
+      -- Ignore because plugin is incorrectly typed as is nvim tradition.
+      ---@diagnostic disable-next-line: missing-fields
+      neotest.run.run({ extra_args = { "--cov", "--cov-report=json" } })
+    end
+    vim.keymap.set("n", "<leader>td", debug)
+    vim.keymap.set("n", "<leader>tr", run)
     vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "error", linehl = "", numhl = "" })
     vim.fn.sign_define("DapBreakpointCondition", { text = "", texthl = "error", linehl = "", numhl = "" })
   end,
